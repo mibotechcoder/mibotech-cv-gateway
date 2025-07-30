@@ -134,7 +134,7 @@ def check_password(n_clicks, pwd):
                 }}
             }}, 4000);
             setTimeout(function() {{
-                window.location.replace('{GPT_LINK}');
+                window.location.href('{GPT_LINK}');
             }}, 4700);
         """)
     else:
