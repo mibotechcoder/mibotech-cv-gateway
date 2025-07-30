@@ -81,12 +81,40 @@ body::before {
     text-decoration: underline;
 }
 
-.terminal-text {
+.terminal-typing {
     font-family: 'Courier New', monospace;
     color: #00ff99;
     background-color: black;
     padding: 10px;
     border-radius: 5px;
     display: inline-block;
-    white-space: pre;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    border-right: 2px solid #00ff99;
+    animation:
+        typing 2s steps(50, end) forwards,
+        blink .7s step-end infinite alternate;
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 45ch
+    }
+}
+
+@keyframes blink {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #00ff99
+    }
 }
