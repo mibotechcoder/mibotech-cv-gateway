@@ -36,6 +36,7 @@ MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
 
 @app.callback(
     Output("login-message", "children"),
+    Output("redirect-div", "children"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
@@ -45,21 +46,22 @@ def check_password(n_clicks, pwd):
         return html.Div([
             html.Div(id="ai-message", className="terminal-text"),
             dcc.Interval(id="typewriter", interval=50, n_intervals=0)
-        ])
+        ]), ""
     else:
-        return "❌ Fel lösenord. Försök igen."
+        return "❌ Fel lösenord. Försök igen.", ""
 
 
 @app.callback(
     Output("ai-message", "children"),
-    Output("typewriter", "disabled"),
+    Output("redirect-div", "children"),
     Input("typewriter", "n_intervals")
 )
 def typewriter_effect(n):
     if n < len(MESSAGE):
-        return MESSAGE[:n+1], False
+        return MESSAGE[:n+1], ""
     else:
-        return dcc.Location(href=GPT_LINK), True
+        # Redirect när texten är klar
+        return MESSAGE, dcc.Location(href=GPT_LINK)
     
 server = app.server
 
