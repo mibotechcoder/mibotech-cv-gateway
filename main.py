@@ -8,8 +8,6 @@ GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
-
 app.layout = dbc.Container(
     [
         html.H1("Mibotech AI CV Gateway", className="title"),
@@ -20,8 +18,6 @@ app.layout = dbc.Container(
                 dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord", className="input-field"),
                 dbc.Button("Logga in", id="login-btn", color="primary", className="login-btn"),
                 html.Div(id="login-message", className="login-message"),
-                html.Div(id="ai-message", className="terminal-text"),  # alltid med i layouten
-                html.Div(id="redirect-div"),  # alltid med i layouten
                 html.Div(
                     [
                         html.P("Saknar du lösenord?", className="info-text"),
@@ -31,38 +27,21 @@ app.layout = dbc.Container(
             ],
             className="login-container"
         ),
-        dcc.Interval(id="typewriter", interval=50, n_intervals=0, disabled=True)  # alltid med i layouten
     ],
     fluid=True,
 )
 
 @app.callback(
     Output("login-message", "children"),
-    Output("typewriter", "disabled"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
 def check_password(n_clicks, pwd):
     if pwd == PASSWORD:
-        return "", False  # aktivera typewriter
+        return dcc.Location(href=GPT_LINK)
     else:
-        return "❌ Fel lösenord. Försök igen.", True
-
-@app.callback(
-    Output("ai-message", "children"),
-    Output("redirect-div", "children"),
-    Output("typewriter", "disabled"),
-    Input("typewriter", "n_intervals"),
-    State("typewriter", "disabled")
-)
-def typewriter_effect(n, disabled):
-    if disabled:
-        return "", "", True
-    if n < len(MESSAGE):
-        return MESSAGE[:n+1], "", False
-    else:
-        return MESSAGE, dcc.Location(href=GPT_LINK), True
+        return "❌ Fel lösenord. Försök igen."
 
 server = app.server
 
