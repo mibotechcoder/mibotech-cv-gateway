@@ -29,38 +29,17 @@ app.layout = html.Div(
 
 @app.callback(
     Output("login-message", "children"),
-    Output("redirect-div", "children"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
 def check_password(n_clicks, pwd):
+    print("DEBUG: Button clicked!", n_clicks, "Value:", pwd)  # <-- debug
     if pwd == PASSWORD:
-        return html.Div([
-            html.Div(id="ai-message", className="terminal-text"),
-            dcc.Interval(id="typewriter", interval=50, n_intervals=0),
-            dcc.Interval(id="redirect-timer", interval=3500, n_intervals=0, max_intervals=1)
-        ]), ""
+        return "✅ Lösenord OK"
     else:
-        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), ""
+        return "❌ Fel lösenord"
 
-@app.callback(
-    Output("ai-message", "children"),
-    Input("typewriter", "n_intervals"),
-    prevent_initial_call=True
-)
-def typewriter_effect(n):
-    return MESSAGE[:n]
-
-@app.callback(
-    Output("redirect-div", "children"),
-    Input("redirect-timer", "n_intervals"),
-    prevent_initial_call=True
-)
-def trigger_redirect(n):
-    if n:
-        return dcc.Location(href=GPT_LINK)
-    return ""
 
 server = app.server
 
