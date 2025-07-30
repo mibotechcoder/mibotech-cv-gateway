@@ -15,14 +15,13 @@ app.layout = html.Div(
                 html.H1("Mibotech AI CV Gateway", className="title"),
                 html.Hr(),
                 html.P("🎤 Prata med mitt CV – exklusiv åtkomst för rekryterare", className="subtitle"),
-                dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord"),
+                dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord", className="input-field"),
                 dbc.Button("Logga in", id="login-btn", color="primary", style={"width": "100%", "marginTop": "10px"}),
                 html.Div(id="login-message", style={"marginTop": "15px"}),
-                html.Div(id="redirect-div"),
-                html.P("Saknar du lösenord?", style={"marginTop": "15px"}),
-                html.A("Kontakta mig via e-post", href="mailto:michael.bohman@pm.me"),
+                html.Div(id="redirect-div")
             ],
             className="login-container",
+            id="login-box"
         )
     ],
     className="center-screen"
@@ -43,7 +42,7 @@ def check_password(n_clicks, pwd):
             dcc.Interval(id="redirect-timer", interval=3500, n_intervals=0, max_intervals=1)
         ]), ""
     else:
-        return "❌ Fel lösenord. Försök igen.", ""
+        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), ""
 
 @app.callback(
     Output("ai-message", "children"),
@@ -67,4 +66,3 @@ server = app.server
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False)
-

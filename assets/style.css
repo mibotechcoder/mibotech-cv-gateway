@@ -8,8 +8,11 @@ body {
 .center-screen {
     display: flex;
     align-items: center;
+    /* Vertikal centrering */
     justify-content: center;
-    height: 100%;
+    /* Horisontell centrering */
+    height: 100vh;
+    /* Viktigt för mittenplacering */
 }
 
 .login-container {
