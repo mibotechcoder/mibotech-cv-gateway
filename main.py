@@ -56,25 +56,16 @@ app.layout = html.Div(
     Output("login-message", "children"),
     Output("typewriter", "disabled"),
     Output("redirect-timer", "disabled"),
-    Output("pwd-input", "value"),
-    Output("focus-script", "children"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
 
 def check_password(n_clicks, pwd):
-    # print("DEBUG: Knapp klickad! Värde:", pwd)  # Debug för att bekräfta jämförelsen
-    # if pwd == PASSWORD:
-    #     return html.Div(id="ai-message", className="terminal-text"), False, False
-    # else:
-    #     return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True
-    # def check_password(n_clicks, pwd):
-    print("DEBUG: Button clicked!", n_clicks, "Value:", pwd)  # <-- debug
     if pwd == PASSWORD:
-        return "✅ Lösenord OK"
+        return html.Div(id="ai-message", className="terminal-text"), False, False
     else:
-        return "❌ Fel lösenord"
+        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True
 # endregion
 
 # region Ticker-callback
@@ -95,10 +86,7 @@ def typewriter_effect(n):
 )
 def trigger_redirect(n):
     if n:
-        return [
-            dcc.Location(href=GPT_LINK, refresh=True),
-            html.Script(f"window.location.href='{GPT_LINK}';")
-        ]
+        return dcc.Location(id="redirect-location", href=GPT_LINK, refresh=True)
     return ""
 # endregion
 
