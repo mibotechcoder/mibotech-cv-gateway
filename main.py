@@ -71,8 +71,8 @@
 
 import os
 import dash
-import dash_bootstrap_components as dbc
 from dash import html, dcc, Input, Output, State
+import dash_bootstrap_components as dbc
 
 PASSWORD = os.environ.get("CV_BOT_PASSWORD", "defaultpassword")
 GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
@@ -82,14 +82,36 @@ MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = dbc.Container(
-    [
-        html.H1("Mibotech AI CV Gateway", className="title"),
-        html.Hr(),
-        dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord", className="input-field"),
-        dbc.Button("Logga in", id="login-btn", color="primary", className="login-btn"),
-        html.Div(id="login-message", className="login-message"),
-        html.Div(id="redirect-script"),
-    ],
+    dbc.Row(
+        dbc.Col(
+            html.Div(
+                [
+                    html.H1("Mibotech AI CV Gateway", className="title", style={"textAlign": "center"}),
+                    html.Hr(),
+                    html.Div(
+                        [
+                            html.P("🎤 Prata med mitt CV – exklusiv åtkomst för rekryterare", className="subtitle"),
+                            dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord", className="input-field", style={"marginBottom": "10px"}),
+                            dbc.Button("Logga in", id="login-btn", color="primary", className="login-btn", style={"width": "100%"}),
+                            html.Div(id="login-message", className="login-message", style={"marginTop": "15px"}),
+                            html.Div(id="redirect-script"),
+                            html.Div(
+                                [
+                                    html.P("Saknar du lösenord?", className="info-text"),
+                                    html.A("Kontakta mig via e-post", href="mailto:michael.bohman@pm.me", className="email-link")
+                                ],
+                                style={"marginTop": "10px", "textAlign": "center"}
+                            ),
+                        ],
+                        className="login-container",
+                        style={"maxWidth": "350px", "margin": "0 auto"}
+                    ),
+                ]
+            ),
+            width=12
+        ),
+        justify="center"
+    ),
     fluid=True,
 )
 
@@ -104,7 +126,11 @@ def check_password(n_clicks, pwd):
     if pwd == PASSWORD:
         return html.Div([
             html.Div(MESSAGE, className="terminal-typing")
-        ]), html.Script(f"setTimeout(function() {{ window.location.href = '{GPT_LINK}'; }}, 3500);")
+        ]), html.Script(f"""
+            setTimeout(function() {{
+                window.location.href = '{GPT_LINK}';
+            }}, 3500);
+        """)
     else:
         return "❌ Fel lösenord. Försök igen.", ""
 
@@ -112,3 +138,4 @@ server = app.server
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False)
+
