@@ -1,53 +1,15 @@
+html,
 body {
-    /* background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2); */
-    background: url('/assets/bck1.jpg') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Segoe UI', sans-serif;
+    height: 100%;
     margin: 0;
-    padding: 0;
+    background: linear-gradient(135deg, #4A90E2, #2C3E50);
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+.center-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100%;
-    background: rgba(118, 166, 237, 0.6);
-    backdrop-filter: blur(0px);
-    z-index: -1;
-}
-
-.title {
-    text-align: center;
-    color: #022d59;
-    margin-top: 40px;
-    font-size: 2.5em;
-}
-
-.subtitle {
-    text-align: center;
-    font-size: 1.2em;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-/* Overlay bakgrund */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0);
-    pointer-events: none;
-    transition: background 0.6s ease;
-    z-index: 10;
-}
-
-.overlay.active {
-    background: rgba(0, 0, 0, 0.7);
 }
 
 .login-container {
@@ -57,47 +19,10 @@ body::before {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     max-width: 350px;
     width: 100%;
-    transition: opacity 0.6s ease;
-}
-
-.fade-out {
-    opacity: 0;
-}
-
-.input-field {
-    margin-bottom: 15px;
-}
-
-.login-btn {
-    width: 100%;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.login-message {
-    margin-top: 10px;
-    color: red;
     text-align: center;
 }
 
-.info-text {
-    text-align: center;
-    font-size: 0.9em;
-}
-
-.email-link {
-    text-align: center;
-    display: block;
-    color: #0066cc;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.email-link:hover {
-    text-decoration: underline;
-}
-
-.terminal-typing {
+.terminal-text {
     font-family: 'Courier New', monospace;
     color: #00ff99;
     background-color: black;
@@ -106,31 +31,4 @@ body::before {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
-    width: 0;
-    border-right: 2px solid #00ff99;
-    animation:
-        typing 2s steps(50, end) forwards,
-        blink .7s step-end infinite alternate;
-}
-
-@keyframes typing {
-    from {
-        width: 0
-    }
-
-    to {
-        width: 45ch
-    }
-}
-
-@keyframes blink {
-
-    from,
-    to {
-        border-color: transparent
-    }
-
-    50% {
-        border-color: #00ff99
-    }
 }
