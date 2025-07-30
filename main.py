@@ -19,6 +19,7 @@ app.layout = dbc.Container(
                 dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord", className="input-field"),
                 dbc.Button("Logga in", id="login-btn", color="primary", className="login-btn"),
                 html.Div(id="login-message", className="login-message"),
+                html.Div(id="redirect-div"),
                 html.Div(
                     [
                         html.P("Saknar du lösenord?", className="info-text"),
@@ -52,14 +53,15 @@ def check_password(n_clicks, pwd):
 
 @app.callback(
     Output("ai-message", "children"),
+    Output("redirect-div", "children"),
     Output("typewriter", "disabled"),
     Input("typewriter", "n_intervals")
 )
 def typewriter_effect(n):
     if n < len(MESSAGE):
-        return MESSAGE[:n+1], False
+        return MESSAGE[:n+1], "", False
     else:
-        return dcc.Location(href=GPT_LINK), True
+        return MESSAGE, dcc.Location(href=GPT_LINK), True
     
 server = app.server
 
