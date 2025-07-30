@@ -71,15 +71,16 @@
 
 import os
 import dash
-from dash import html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
+import time
+from dash import html, dcc, Input, Output, State
 
 # Läs in variabler från Render Environment
 PASSWORD = os.environ.get("CV_BOT_PASSWORD", "defaultpassword")
 GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
+MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
 app.layout = dbc.Container(
     [
         html.H1("Mibotech AI CV Gateway", className="title"),
@@ -104,8 +105,6 @@ app.layout = dbc.Container(
     fluid=True,
 )
 
-MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
-
 @app.callback(
     Output("login-message", "children"),
     Input("login-btn", "n_clicks"),
@@ -114,10 +113,10 @@ MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
 )
 def check_password(n_clicks, pwd):
     if pwd == PASSWORD:
+        time.sleep(0.5)  # 500ms fördröjning, inget hackande
         return html.Div([
-            html.Div(id="ai-message", className="terminal-text"),
-            dcc.Interval(id="typewriter", interval=50, n_intervals=0)
-        ])
+            html.Div(MESSAGE, className="terminal-text")
+            ]), dcc.Location(href=GPT_LINK)
     else:
         return "❌ Fel lösenord. Försök igen."
 
