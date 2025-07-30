@@ -28,7 +28,7 @@ app.layout = html.Div(
 
                 # Intervals i layout från start (inaktiva)
                 dcc.Interval(id="typewriter", interval=TYPING_INTERVAL, n_intervals=0, disabled=True),
-                dcc.Interval(id="redirect-timer", interval=REDIRECT_DELAY, n_intervals=0, max_intervals=1, disabled=True)
+                dcc.Interval(id="redirect-timer", interval=REDIRECT_DELAY, n_intervals=0, max_intervals=1)
             ],
             className="login-container",
         )
