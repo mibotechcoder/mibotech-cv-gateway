@@ -40,10 +40,23 @@ app.layout = dbc.Container(
 )
 def check_password(n_clicks, pwd):
     if pwd == PASSWORD:
-        return dcc.Location(href=GPT_LINK, id="redirect")
+        return html.Div([
+            html.Div(id="ai-message", className="terminal-text", children=""),
+            dcc.Interval(id="typewriter", interval=50, n_intervals=0, max_intervals=len("🤖 Welcome, human recruiter. Mibotech AI systems are now online.")),
+            dcc.Interval(id="redirect-timer", interval=2500, n_intervals=0),  # Redirect efter 2.5 sek
+            dcc.Location(href=GPT_LINK, id="redirect", refresh=True)
+        ])
     else:
         return "❌ Fel lösenord. Försök igen."
-
+    
+    MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
+    @app.callback(
+        Output("ai-message", "children"),
+        Input("typewriter", "n_intervals")
+    )
+    def typewriter_effect(n):
+        return MESSAGE[:n]
+    
 server = app.server
 
 if __name__ == "__main__":

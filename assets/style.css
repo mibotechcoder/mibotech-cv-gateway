@@ -80,3 +80,13 @@ body::before {
 .email-link:hover {
     text-decoration: underline;
 }
+
+.terminal-text {
+    font-family: 'Courier New', monospace;
+    color: #00ff99;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    white-space: pre;
+}
