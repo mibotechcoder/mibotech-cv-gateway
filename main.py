@@ -40,7 +40,6 @@ MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
-
 def check_password(n_clicks, pwd):
     if pwd == PASSWORD:
         return html.Div([
@@ -49,17 +48,18 @@ def check_password(n_clicks, pwd):
         ])
     else:
         return "❌ Fel lösenord. Försök igen."
-       
-    @app.callback(
-        Output("ai-message", "children"),
-        Output("typewriter", "disabled"),
-        Input("typewriter", "n_intervals")
-    )
-    def typewriter_effect(n):
-        if n < len(MESSAGE):
-            return MESSAGE[:n+1], False
-        else:
-            return dcc.Location(href=GPT_LINK), True
+
+
+@app.callback(
+    Output("ai-message", "children"),
+    Output("typewriter", "disabled"),
+    Input("typewriter", "n_intervals")
+)
+def typewriter_effect(n):
+    if n < len(MESSAGE):
+        return MESSAGE[:n+1], False
+    else:
+        return dcc.Location(href=GPT_LINK), True
     
 server = app.server
 
