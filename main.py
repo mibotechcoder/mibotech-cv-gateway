@@ -32,30 +32,34 @@ app.layout = dbc.Container(
     fluid=True,
 )
 
+MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
+
 @app.callback(
     Output("login-message", "children"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
+
 def check_password(n_clicks, pwd):
     if pwd == PASSWORD:
         return html.Div([
-            html.Div(id="ai-message", className="terminal-text", children=""),
-            dcc.Interval(id="typewriter", interval=50, n_intervals=0, max_intervals=len("🤖 Welcome, human recruiter. Mibotech AI systems are now online.")),
-            dcc.Interval(id="redirect-timer", interval=2500, n_intervals=0),  # Redirect efter 2.5 sek
-            dcc.Location(href=GPT_LINK, id="redirect", refresh=True)
+            html.Div(id="ai-message", className="terminal-text"),
+            dcc.Interval(id="typewriter", interval=50, n_intervals=0)
         ])
     else:
         return "❌ Fel lösenord. Försök igen."
-    
-    MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
+       
     @app.callback(
         Output("ai-message", "children"),
+        Output("typewriter", "disabled"),
         Input("typewriter", "n_intervals")
     )
     def typewriter_effect(n):
-        return MESSAGE[:n]
+        if n < len(MESSAGE):
+            return MESSAGE[:n+1], False
+        else:
+            return dcc.Location(href=GPT_LINK), True
     
 server = app.server
 
