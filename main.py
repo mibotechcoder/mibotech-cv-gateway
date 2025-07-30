@@ -22,7 +22,7 @@ app.layout = dbc.Container(
                 html.Div(
                     [
                         html.P("Saknar du lösenord?", className="info-text"),
-                        html.A("Kontakta mig via e-post", href="mailto:michael@email.com", className="email-link")
+                        html.A("Kontakta mig via e-post", href="mailto:michael.bohman@pm.me", className="email-link")
                     ]
                 ),
             ],
