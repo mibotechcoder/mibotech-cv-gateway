@@ -11,7 +11,7 @@ It allows recruiters to interact with my professional profile, projects, and tec
 - Hosted on Render: [https://mibotech-cv-gateway.onrender.com](https://mibotech-cv-gateway.onrender.com)
 - Access is restricted with a password.
 - **Contact for password:**  
-  📧 michael@email.com
+  📧 mibotechcoder@gmail.com
 
 ---
 
