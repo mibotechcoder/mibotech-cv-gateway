@@ -84,7 +84,7 @@ def typewriter_effect(n):
 def trigger_redirect(n):
     if n:
         return dcc.Location(href=GPT_LINK)
-    return "
+    return ""
 
 server = app.server
 
