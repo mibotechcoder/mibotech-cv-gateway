@@ -79,14 +79,15 @@ def typewriter_effect(n):
     return MESSAGE[:n]
 # endregion
 
-#region Redirect-callback
+#region Redirect-callback (med Flagga för timer)
 @app.callback(
     Output("redirect-div", "children"),
     Input("redirect-timer", "n_intervals"),
+    State("access-granted", "data"),
     prevent_initial_call=True
 )
-def trigger_redirect(n):
-    if n:
+def trigger_redirect(n, access_granted):
+    if n and access_granted:
         return dcc.Location(id="redirect-location", href=GPT_LINK, refresh=True)
     return ""
 # endregion
