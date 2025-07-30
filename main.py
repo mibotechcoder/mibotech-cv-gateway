@@ -56,17 +56,18 @@ app.layout = html.Div(
     Output("login-message", "children"),
     Output("typewriter", "disabled"),
     Output("redirect-timer", "disabled"),
-    Output("typewriter", "n_intervals"),
     Output("redirect-timer", "n_intervals"),
+    Output("access-granted", "data"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
 def check_password(n_clicks, pwd):
+    print(f"DEBUG: Lösenord inmatat: {pwd}, Korrekt? {pwd == PASSWORD}")
     if pwd and pwd == PASSWORD:
-        return html.Div(id="ai-message", className="terminal-text"), False, False, 0, 0
+        return html.Div(id="ai-message", className="terminal-text"), False, False, 0, True
     else:
-        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True, 0, 0
+        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True, 0, False
 # endregion
 
 # region Ticker-callback
