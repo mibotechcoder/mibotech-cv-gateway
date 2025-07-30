@@ -135,7 +135,7 @@ def check_password(n_clicks, pwd):
             }}, 3000);
             setTimeout(function() {{
                 window.location.replace('{GPT_LINK}');
-            }}, 3600);
+            }}, 4700);
         """)
     else:
         return "❌ Fel lösenord. Försök igen.", ""
