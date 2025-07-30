@@ -15,17 +15,23 @@ app.layout = html.Div(
                 html.H1("Mibotech AI CV Gateway", className="title"),
                 html.Hr(),
                 html.P("🎤 Prata med mitt CV – exklusiv åtkomst för rekryterare", className="subtitle"),
-                dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord", className="input-field"),
+                
+                dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord"),
                 dbc.Button("Logga in", id="login-btn", color="primary", style={"width": "100%", "marginTop": "10px"}),
+
                 html.Div(id="login-message", style={"marginTop": "15px"}),
-                html.Div(id="redirect-div")
+                html.Div(id="redirect-div"),
+
+                # Intervals i layout från start (inaktiva)
+                dcc.Interval(id="typewriter", interval=50, n_intervals=0, disabled=True),
+                dcc.Interval(id="redirect-timer", interval=3500, n_intervals=0, max_intervals=1, disabled=True)
             ],
             className="login-container",
-            id="login-box"
         )
     ],
     className="center-screen"
 )
+
 
 # TEST
 # @app.callback(
@@ -41,27 +47,23 @@ app.layout = html.Div(
 #     else:
 #         return "❌ Fel lösenord"
 
+# region Login-callback
 @app.callback(
     Output("login-message", "children"),
-    Output("redirect-div", "children"),
+    Output("typewriter", "disabled"),
+    Output("redirect-timer", "disabled"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
 def check_password(n_clicks, pwd):
     if pwd == PASSWORD:
-        return (
-            html.Div([
-                html.Div(id="ai-message", className="terminal-text"),
-                dcc.Interval(id="typewriter", interval=50, n_intervals=0),
-                dcc.Interval(id="redirect-timer", interval=3500, n_intervals=0, max_intervals=1)
-            ]),
-            ""
-        )
+        return html.Div(id="ai-message", className="terminal-text"), False, False
     else:
-        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), ""
+        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True
+# endregion
 
-# Callback för ticker
+#region Ticker-callback
 @app.callback(
     Output("ai-message", "children"),
     Input("typewriter", "n_intervals"),
@@ -69,8 +71,9 @@ def check_password(n_clicks, pwd):
 )
 def typewriter_effect(n):
     return MESSAGE[:n]
+# endregion
 
-# Callback för redirect
+#region Redirect-callback
 @app.callback(
     Output("redirect-div", "children"),
     Input("redirect-timer", "n_intervals"),
@@ -80,6 +83,7 @@ def trigger_redirect(n):
     if n:
         return dcc.Location(href=GPT_LINK)
     return ""
+# endregion
 
 server = app.server
 
