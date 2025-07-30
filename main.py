@@ -128,8 +128,14 @@ def check_password(n_clicks, pwd):
             html.Div(MESSAGE, className="terminal-typing")
         ]), html.Script(f"""
             setTimeout(function() {{
-                window.location.href = '{GPT_LINK}';
-            }}, 3500);
+                var box = document.getElementById('login-box');
+                if (box) {{
+                    box.classList.add('fade-out');
+                }}
+            }}, 3000);
+            setTimeout(function() {{
+                window.location.replace('{GPT_LINK}');
+            }}, 3600);
         """)
     else:
         return "❌ Fel lösenord. Försök igen.", ""
