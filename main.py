@@ -66,15 +66,9 @@ app.layout = html.Div(
 def check_password(n_clicks, pwd):
     print("DEBUG: Knapp klickad! Värde:", pwd)  # Debug för att bekräfta jämförelsen
     if pwd == PASSWORD:
-        return html.Div(id="ai-message", className="terminal-text"), False, False, "", ""  
-        # Vi skickar tillbaka "" så fältet ändå töms vid redirect (men spelar ingen roll då)
+        return html.Div(id="ai-message", className="terminal-text"), False, False
     else:
-        focus_js = html.Script("""
-            setTimeout(function(){
-                document.getElementById('pwd-input').focus();
-            }, 50);
-        """)
-        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True, "", focus_js
+        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True
 # endregion
 
 # region Ticker-callback
