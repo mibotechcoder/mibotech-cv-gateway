@@ -132,7 +132,7 @@ def check_password(n_clicks, pwd):
                 if (box) {{
                     box.classList.add('fade-out');
                 }}
-            }}, 3000);
+            }}, 4000);
             setTimeout(function() {{
                 window.location.replace('{GPT_LINK}');
             }}, 4700);
