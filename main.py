@@ -4,10 +4,14 @@ import dash_bootstrap_components as dbc
 
 PASSWORD = os.environ.get("CV_BOT_PASSWORD", "defaultpassword")
 GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
+
 MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
+TYPING_INTERVAL = 50  # ms per tecken
+REDIRECT_DELAY = len(MESSAGE) * TYPING_INTERVAL + 500  # Dynamisk tid
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+# region Layout
 app.layout = html.Div(
     [
         html.Div(
@@ -23,15 +27,15 @@ app.layout = html.Div(
                 html.Div(id="redirect-div"),
 
                 # Intervals i layout från start (inaktiva)
-                dcc.Interval(id="typewriter", interval=50, n_intervals=0, disabled=True),
-                dcc.Interval(id="redirect-timer", interval=3500, n_intervals=0, max_intervals=1, disabled=True)
+                dcc.Interval(id="typewriter", interval=TYPING_INTERVAL, n_intervals=0, disabled=True),
+                dcc.Interval(id="redirect-timer", interval=REDIRECT_DELAY, n_intervals=0, max_intervals=1, disabled=True)
             ],
             className="login-container",
         )
     ],
     className="center-screen"
 )
-
+# endregion
 
 # TEST
 # @app.callback(
@@ -63,7 +67,7 @@ def check_password(n_clicks, pwd):
         return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True
 # endregion
 
-#region Ticker-callback
+# region Ticker-callback
 @app.callback(
     Output("ai-message", "children"),
     Input("typewriter", "n_intervals"),
