@@ -64,11 +64,17 @@ app.layout = html.Div(
 )
 
 def check_password(n_clicks, pwd):
-    print("DEBUG: Knapp klickad! Värde:", pwd)  # Debug för att bekräfta jämförelsen
+    # print("DEBUG: Knapp klickad! Värde:", pwd)  # Debug för att bekräfta jämförelsen
+    # if pwd == PASSWORD:
+    #     return html.Div(id="ai-message", className="terminal-text"), False, False
+    # else:
+    #     return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True
+    # def check_password(n_clicks, pwd):
+    print("DEBUG: Button clicked!", n_clicks, "Value:", pwd)  # <-- debug
     if pwd == PASSWORD:
-        return html.Div(id="ai-message", className="terminal-text"), False, False
+        return "✅ Lösenord OK"
     else:
-        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True
+        return "❌ Fel lösenord"
 # endregion
 
 # region Ticker-callback
