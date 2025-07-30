@@ -129,7 +129,7 @@ def check_password(n_clicks, pwd):
     Input("typewriter", "n_intervals")
 )
 def typewriter_effect(n):
-    if n <= len(MESSAGE) - 1:
+    if n < len(MESSAGE) - 1:
         return MESSAGE[:n+1], "", False
     else:
         return MESSAGE, dcc.Location(href=GPT_LINK), True
