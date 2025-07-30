@@ -44,30 +44,24 @@ app.layout = html.Div(
 @app.callback(
     Output("login-message", "children"),
     Output("redirect-div", "children"),
-    Output("pwd-input", "value"),
-    Output("focus-script", "children"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
 def check_password(n_clicks, pwd):
-    print("DEBUG: Button clicked!", n_clicks, "Value:", pwd)
-
     if pwd == PASSWORD:
-        return html.Div([
-            html.Div(id="ai-message", className="terminal-text"),
-            dcc.Interval(id="typewriter", interval=50, n_intervals=0),
-            dcc.Interval(id="redirect-timer", interval=3500, n_intervals=0, max_intervals=1)
-        ]), "", pwd, ""
+        return (
+            html.Div([
+                html.Div(id="ai-message", className="terminal-text"),
+                dcc.Interval(id="typewriter", interval=50, n_intervals=0),
+                dcc.Interval(id="redirect-timer", interval=3500, n_intervals=0, max_intervals=1)
+            ]),
+            ""
+        )
     else:
-        # Fel lösenord → rensa fält och sätt fokus
-        focus_js = html.Script("""
-            setTimeout(function(){
-                document.getElementById('pwd-input').focus();
-            }, 50);
-        """)
-        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), "", "", focus_js
+        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), ""
 
+# Callback för ticker
 @app.callback(
     Output("ai-message", "children"),
     Input("typewriter", "n_intervals"),
@@ -76,6 +70,7 @@ def check_password(n_clicks, pwd):
 def typewriter_effect(n):
     return MESSAGE[:n]
 
+# Callback för redirect
 @app.callback(
     Output("redirect-div", "children"),
     Input("redirect-timer", "n_intervals"),
