@@ -1,0 +1,5 @@
+# Ignore local environment files
+mibotech_env_local.env
+.env
+__pycache__/
+*.pyc
