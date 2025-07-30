@@ -62,7 +62,7 @@ app.layout = html.Div(
 )
 
 def check_password(n_clicks, pwd):
-    if pwd == PASSWORD:
+    if pwd and pwd == PASSWORD:  # måste vara ifyllt OCH matcha
         return html.Div(id="ai-message", className="terminal-text"), False, False
     else:
         return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True
