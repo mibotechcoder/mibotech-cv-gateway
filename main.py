@@ -2,12 +2,16 @@ import os
 from dash import Dash, html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 
+
 PASSWORD = os.environ.get("CV_BOT_PASSWORD", "defaultpassword")
 GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
 
+# PASSWORD = "test"
+# GPT_LINK = "https://my-gpt-lnk"
+
 MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
-TYPING_INTERVAL = 50  # ms per tecken
-REDIRECT_DELAY = len(MESSAGE) * TYPING_INTERVAL + 500  # Dynamisk tid
+TYPING_INTERVAL = 30  # ms per tecken
+REDIRECT_DELAY = len(MESSAGE) * TYPING_INTERVAL + 100  # Dynamisk tid
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -22,7 +26,7 @@ app.layout = html.Div(
                 
                 dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord"),
                 dbc.Button("Logga in", id="login-btn", color="primary", style={"width": "100%", "marginTop": "10px"}),
-
+                html.Div(id="ai-message", className="terminal-text"),
                 html.Div(id="login-message", style={"marginTop": "15px"}),
                 html.Div(id="redirect-div"),
 
@@ -37,37 +41,22 @@ app.layout = html.Div(
 )
 # endregion
 
-# TEST
-# @app.callback(
-#     Output("login-message", "children"),
-#     Input("login-btn", "n_clicks"),
-#     State("pwd-input", "value"),
-#     prevent_initial_call=True
-# )
-# def check_password(n_clicks, pwd):
-#     print("DEBUG: Button clicked!", n_clicks, "Value:", pwd)  # <-- debug
-#     if pwd == PASSWORD:
-#         return "✅ Lösenord OK"
-#     else:
-#         return "❌ Fel lösenord"
-
 # region Login-callback
 @app.callback(
     Output("login-message", "children"),
     Output("typewriter", "disabled"),
     Output("redirect-timer", "disabled"),
+    Output("typewriter", "n_intervals"),
     Output("redirect-timer", "n_intervals"),
-    Output("access-granted", "data"),
     Input("login-btn", "n_clicks"),
     State("pwd-input", "value"),
     prevent_initial_call=True
 )
 def check_password(n_clicks, pwd):
-    print(f"DEBUG: Lösenord inmatat: {pwd}, Korrekt? {pwd == PASSWORD}")
     if pwd and pwd == PASSWORD:
-        return html.Div(id="ai-message", className="terminal-text"), False, False, 0, True
+        return html.Div(id="ai-message", className="terminal-text"), False, False, 0, 0
     else:
-        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True, 0, False
+        return html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}), True, True, 0, 0
 # endregion
 
 # region Ticker-callback
@@ -80,11 +69,11 @@ def typewriter_effect(n):
     return MESSAGE[:n]
 # endregion
 
-#region Redirect-callback (med Flagga för timer)
+#region Redirect-callback
 @app.callback(
     Output("redirect-div", "children"),
     Input("redirect-timer", "n_intervals"),
-    State("access-granted", "data"),
+    State("pwd-input", "value"),
     prevent_initial_call=True
 )
 def trigger_redirect(n, access_granted):
@@ -96,4 +85,8 @@ def trigger_redirect(n, access_granted):
 server = app.server
 
 if __name__ == "__main__":
+    # RUN kommando för Render
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False)
+    # RUN kommando för lokat
+    # app.run(debug=True)
+    #app.run_server(debug=True, port=8051) # Vid användning av debugger
