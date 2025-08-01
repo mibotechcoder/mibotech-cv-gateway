@@ -31,12 +31,34 @@ body {
 }
 
 .terminal-text {
-    font-family: 'Courier New', monospace;
-    color: #00ff99;
     background-color: black;
-    padding: 10px;
-    border-radius: 5px;
-    display: inline-block;
-    white-space: nowrap;
+    color: limegreen;
+    font-family: monospace;
+    padding: 5px;
+    width: 100%;
+    /* matchar knappen */
     overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.terminal-text span {
+    display: inline-block;
+    padding-left: 100%;
+    /* start utanför till höger */
+    animation: ticker 10s linear 1 forwards;
+    /* 1 gång, stanna sist */
+}
+
+@keyframes ticker {
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
 }

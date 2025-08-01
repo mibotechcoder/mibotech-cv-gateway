@@ -106,6 +106,7 @@ server = app.server
 if __name__ == "__main__":
     # RUN kommando för Render
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False)
+    
     # RUN kommando för lokat
     # app.run(debug=True)
     #app.run_server(debug=True, port=8051) # Vid användning av debugger
