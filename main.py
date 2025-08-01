@@ -3,11 +3,11 @@ from dash import Dash, html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 
 
-# PASSWORD = os.environ.get("CV_BOT_PASSWORD", "defaultpassword")
-# GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
+PASSWORD = os.environ.get("CV_BOT_PASSWORD", "defaultpassword")
+GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
 
-PASSWORD = "test"
-GPT_LINK = "https://my-gpt-lnk"
+# PASSWORD = "test"
+# GPT_LINK = "https://my-gpt-lnk"
 
 MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
 TYPING_INTERVAL = 50  # ms per tecken
@@ -94,7 +94,7 @@ def typewriter_effect(n):
 )
 def trigger_redirect(n, access_granted): # Används av Render
 # def trigger_redirect(n, pwd): " Används vid lokal körning"
-    print(f"DEBUG: Redirect timer n_intervals={n}, pwd={pwd}")
+    # print(f"DEBUG: Redirect timer n_intervals={n}, pwd={pwd}")
     if n and access_granted: # Används av Render
     # if n and pwd == PASSWORD: # Används vid lokal körning
         return dcc.Location(id="redirect-location", href=GPT_LINK, refresh=True)
@@ -105,7 +105,7 @@ server = app.server
 
 if __name__ == "__main__":
     # RUN kommando för Render
-    # app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8050)), debug=False)
     # RUN kommando för lokat
-    app.run(debug=True)
+    # app.run(debug=True)
     #app.run_server(debug=True, port=8051) # Vid användning av debugger
