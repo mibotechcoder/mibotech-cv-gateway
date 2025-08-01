@@ -18,7 +18,7 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 # region Layout
 app.layout = html.Div(
     [
-        html.Div(
+        html.Div(  # Login-rutan
             [
                 html.H1("Mibotech AI CV Gateway", className="title"),
                 html.Hr(),
@@ -26,7 +26,12 @@ app.layout = html.Div(
                 
                 dbc.Input(id="pwd-input", type="password", placeholder="Ange lösenord"),
                 dbc.Button("Logga in", id="login-btn", color="primary", style={"width": "100%", "marginTop": "10px"}),
-                html.Div(id="ai-message", className="terminal-text", style={"display": "none"}),
+                html.Div(
+                    html.Span(MESSAGE),  # hela texten direkt
+                    id="ai-message",
+                    className="terminal-text",
+                    style={"display": "none"}
+                ),
                 html.Div(id="login-message", style={"marginTop": "15px"}),
                 html.Div(id="redirect-div"),
 
@@ -35,6 +40,22 @@ app.layout = html.Div(
                 dcc.Interval(id="redirect-timer", interval=REDIRECT_DELAY, n_intervals=0, max_intervals=1)
             ],
             className="login-container",
+        ),
+
+        html.Div(  # Info-rutan
+            [
+                html.Small(
+                    [
+                        "Är du en nyfiken samarbetspartner eller arbetar inom HR och rekrytering men saknar inloggning? ",
+                        html.A("Skicka ett InMail på LinkedIn", 
+                               href="https://www.linkedin.com/in/michaelbohman71/",
+                               target="_blank",
+                               style={"color": "#0A66C2", "textDecoration": "none", "fontWeight": "bold"})
+                    ],
+                    className="info-text"
+                )
+            ],
+            style={"marginTop": "10px", "padding": "8px"}
         )
     ],
     className="center-screen"
@@ -72,17 +93,13 @@ def check_password(n_clicks, pwd):
 
 # region Ticker-callback
 @app.callback(
-    Output("ai-message", "children"),
-    Output("typewriter", "disabled"), # Stänger av när ticker är färdig
+    Output("ai-message", "style"),
     Input("typewriter", "n_intervals"),
     prevent_initial_call=True
 )
 def typewriter_effect(n):
     # print(f"DEBUG: Typewriter n_intervals={n} / len={len(MESSAGE)}")
-    if n < len(MESSAGE):
-        return MESSAGE[:n], False
-    else:
-        return MESSAGE, True  # Skriv hela meddelandet och stäng av
+    return {"display": "block"}  # Bara visa tickern, CSS gör rullningen
 # endregion
 
 #region Redirect-callback
