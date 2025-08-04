@@ -1,7 +1,8 @@
 import os
+import dash
 from dash import Dash, html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
-
+from dash.dependencies import Input, Output, State
 
 PASSWORD = os.environ.get("CV_BOT_PASSWORD", "defaultpassword")
 GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
@@ -13,12 +14,47 @@ MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
 TYPING_INTERVAL = 50  # ms per tecken
 REDIRECT_DELAY = len(MESSAGE) * TYPING_INTERVAL + 400  # Dynamisk tid
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+# Läs in AI-info-texten från fil
+with open("ai_popup_info.txt", encoding="utf-8") as f:
+    AI_INFO_TEXT = f.read()
+
+app = Dash(
+    __name__, 
+    external_stylesheets=[
+        dbc.themes.BOOTSTRAP,
+        "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    ]
+)
 
 # region Layout
 app.layout = html.Div(
     [
-        # Wrapper för centrerad layout
+        # Popup ruta med information och varning
+        html.Div(
+            [
+                html.I(className="bi bi-question-circle-fill",  # Bootstrap-ikon
+                       id="help-icon",
+                       style={"fontSize": "2.5rem", "color": "#4074B2", "cursor": "pointer"})
+            ],
+            style={"position": "absolute", "top": "30px", "right": "30px", "zIndex": 10}
+        ),
+
+        # Popup/modal
+        dbc.Modal(
+            [
+                dbc.ModalHeader(dbc.ModalTitle("Viktigt om AI-svar")),
+                dbc.ModalBody(AI_INFO_TEXT),
+                dbc.ModalFooter(
+                    dbc.Button("Stäng", id="close-help", className="ms-auto", n_clicks=0)
+                ),
+            ],
+            id="help-modal",
+            is_open=False,
+            size="lg"
+        ),
+
+
+        # Wrapper för centrerad layout Infor-ruta
         html.Div(  
             [
                 # Login-
@@ -61,6 +97,18 @@ app.layout = html.Div(
 )
 # endregion
 
+# region popup
+@app.callback(
+    Output("help-modal", "is_open"),
+    [Input("help-icon", "n_clicks"), Input("close-help", "n_clicks")],
+    [dash.dependencies.State("help-modal", "is_open")]
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+# endregion
+
 # region Login-callback
 @app.callback(
 
@@ -87,7 +135,7 @@ def check_password(n_clicks, pwd):
         return html.Div([
             html.Div("❌ Fel lösenord. Försök igen.", style={"color": "red"}),
             focus_script
-        ]), True, 0, 0, "", {"display": "none"}
+        ]), True, dash.no_update, dash.no_update, "", {"display": "none"}
 # endregion
 
 # region Ticker-callback

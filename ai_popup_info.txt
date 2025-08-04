@@ -1,0 +1,22 @@
+Viktigt att veta om AI-svar och verifierad fakta
+Detta verktyg drivs av en språkmodell (GPT/AI) som genererar svar baserat på instruktioner och tillgänglig dokumentation.
+Syftet är att alltid bygga svar enbart på verifierade fakta från CV, bilagor eller annan dokumentation – aldrig på gissningar, antaganden eller egna exempel.
+Trots detta finns en teknisk risk: Språkmodeller är utvecklade för att vara hjälpsamma och kan ibland, om underlaget är svagt eller frågan öppnar för det, fylla i eller skapa svar som inte är helt verifierade. Detta kan ske även om tydliga instruktioner finns.
+
+Vad innebär det?
+AI:n ska alltid svara “det saknas dokumenterat underlag” om frågan inte täcks i CV eller bilaga.
+I vissa situationer kan AI:n ändå råka skapa svar som låter verkliga men inte är dokumenterade – det är en känd risk med språkmodeller.
+Därför måste alla användare vara vaksamma, dubbelkolla svar och aldrig ta AI:n som enda källa vid viktiga beslut.
+
+Extra viktigt vid arbetsintervju:
+Vid verkliga arbetsintervjuer eller formella rekryteringsprocesser får AI:n inte betraktas som en säker källa för faktiska arbetslivserfarenheter eller case. Alla påståenden och exempel måste kontrolleras mot den faktiska dokumentationen, och aldrig användas utan manuell granskning.
+
+Rekommendation:
+Använd AI:n som ett stöd och påminn dig om att manuellt granska eller verifiera svar mot underlaget, särskilt i känsliga eller formella sammanhang som arbetsintervjuer, referenstagning eller beslutsmöten.
+
+Om AI:n skulle avvika från instruktionen:
+Rapportera omedelbart till systemansvarig. Endast dokumenterade erfarenheter ska användas.
+Din noggrannhet som användare är avgörande för att upprätthålla kvalitet och säkerhet.
+
+Observera:
+Denna AI-tjänst är ett stödverktyg och kan aldrig ersätta en verklig dialog mellan människor. På grund av risken för fel eller feltolkningar hos språkmodellen bör alla viktiga frågor, särskilt vid arbetsintervjuer eller avgörande beslut, alltid diskuteras direkt mellan kandidat och arbetsgivare. Personlig kontakt ger en djupare förståelse och minskar risken för missförstånd som AI annars kan orsaka.
