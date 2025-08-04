@@ -12,7 +12,7 @@ GPT_LINK = os.environ.get("GPT_LINK", "https://my-gpt-lnk")
 
 MESSAGE = "🤖 Welcome, human recruiter. Mibotech AI systems are now online."
 TYPING_INTERVAL = 50  # ms per tecken
-REDIRECT_DELAY = len(MESSAGE) * TYPING_INTERVAL + 3000  # Dynamisk tid
+REDIRECT_DELAY = len(MESSAGE) * TYPING_INTERVAL + 5000  # Dynamisk tid
 
 # Läs in AI-info-texten från fil
 with open("ai_popup_info.txt", encoding="utf-8") as f:
