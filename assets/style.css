@@ -19,7 +19,7 @@ body {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
-    max-width: 350px;
+    max-width: 450px;
     width: 100%;
     text-align: center;
 }
@@ -64,19 +64,31 @@ body {
     }
 }
 
-.info-text {
-    display: block;
-    font-size: 0.8rem;
-    color: #555;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    padding: 8px;
-    text-align: center;
-    line-height: 1.2;
+/* Info-ruta */
+.info-container {
     margin-top: 10px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    background-color: #E6F0FA;
+    /* Ljusblå bakgrund */
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* matchar loginrutan */
 }
 
-.info-text a:hover {
+.info-text {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.inmail-link {
+    color: #0A66C2;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.inmail-link:hover {
     text-decoration: underline;
 }
